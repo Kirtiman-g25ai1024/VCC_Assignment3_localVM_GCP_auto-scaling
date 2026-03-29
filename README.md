@@ -1,0 +1,1 @@
+# VCC_Assignment3_localVM_GCP_auto-scaling
