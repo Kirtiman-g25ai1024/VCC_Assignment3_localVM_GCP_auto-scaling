@@ -1,0 +1,36 @@
+# GCP credentials — NEVER commit these
+*.json
+service-account-key*.json
+credentials*.json
+
+# Terraform
+terraform/.terraform/
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/*.tfplan
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.env
+
+# Docker
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Monitoring data
+grafana-data/
+prometheus-data/
+
+# Cooldown state
+/tmp/autoscale_cooldown
