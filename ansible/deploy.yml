@@ -1,0 +1,39 @@
+---
+- name: Deploy application to cloud VM
+  hosts: cloud_vms
+  become: yes
+
+  tasks:
+    - name: Install Docker
+      apt:
+        name: [docker.io, docker-compose, python3-pip]
+        state: present
+        update_cache: yes
+
+    - name: Start Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Copy application files
+      copy:
+        src: ../app/
+        dest: /opt/autoscale-demo/app/
+
+    - name: Copy docker-compose file
+      copy:
+        src: ../docker-compose.yml
+        dest: /opt/autoscale-demo/docker-compose.yml
+
+    - name: Start application
+      shell: >
+        cd /opt/autoscale-demo &&
+        docker-compose up -d --build
+
+    - name: Verify deployment
+      uri:
+        url: http://localhost:5000/health
+        status_code: 200
+      retries: 10
+      delay: 15
